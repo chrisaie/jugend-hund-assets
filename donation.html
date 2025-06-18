@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Camp Donation Slider</title>
   <style>
     body {
@@ -12,11 +13,11 @@
 
     .slider-container {
       display: flex;
-      justify-content: center;
-      align-items: flex-end;
       gap: 20px;
-      padding: 60px 20px;
+      padding: 40px 20px;
       overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
     }
 
     .slider-container::-webkit-scrollbar {
@@ -24,6 +25,7 @@
     }
 
     .card {
+      scroll-snap-align: center;
       background: white;
       border-radius: 20px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -39,10 +41,12 @@
       z-index: 0;
     }
 
-    .card:hover {
-      transform: scale(1.08);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-      z-index: 2;
+    @media (hover: hover) {
+      .card:hover {
+        transform: scale(1.08);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        z-index: 2;
+      }
     }
 
     .card img {
@@ -88,17 +92,21 @@
     }
 
     @media (max-width: 768px) {
-      .slider-container {
-        padding: 40px 10px;
-      }
-
       .card {
         width: 200px;
-        height: 380px;
+        height: 360px;
       }
 
       .card img {
-        height: 160px;
+        height: 150px;
+      }
+
+      .card-content h3 {
+        font-size: 16px;
+      }
+
+      .card-content p {
+        font-size: 13px;
       }
     }
   </style>
@@ -107,7 +115,7 @@
 
 <div class="slider-container">
   <div class="card">
-    <img src="bett_m.jpg" alt="Bettmüpferli">
+    <img src="bett_m.jpg" alt="Bettmüpferli" />
     <div class="card-content">
       <h3>Bettmüpferli</h3>
       <p>Ein süsser Tagesabschluss für kleine Abenteurer.</p>
@@ -116,7 +124,7 @@
   </div>
 
   <div class="card">
-    <img src="dessert.jpg" alt="Benny Znüni">
+    <img src="dessert.jpg" alt="Benny Znüni" />
     <div class="card-content">
       <h3>Bennys Spezial-Znüni</h3>
       <p>Liebevoll belegte Pausenstärkung für unser Leiterteam.</p>
@@ -125,7 +133,7 @@
   </div>
 
   <div class="card">
-    <img src="glace.jpg" alt="Glace für alle">
+    <img src="glace.jpg" alt="Glace für alle" />
     <div class="card-content">
       <h3>Eine Runde Glaces</h3>
       <p>Ein Glace für jedes Kind und jeden Hund. Sommerfeeling pur!</p>
@@ -134,7 +142,7 @@
   </div>
 
   <div class="card">
-    <img src="backpack.jpg" alt="Wander-Surprise">
+    <img src="backpack.jpg" alt="Wander-Surprise" />
     <div class="card-content">
       <h3>Surprise im Rucksack</h3>
       <p>Magische Momente mitten im Berg – einfach so.</p>
@@ -143,7 +151,7 @@
   </div>
 
   <div class="card">
-    <img src="firstaid.jpg" alt="1. Hilfe Update">
+    <img src="firstaid.jpg" alt="1. Hilfe Update" />
     <div class="card-content">
       <h3>1. Hilfe Koffer</h3>
       <p>Für alles von kleinen Kratzern bis zu echten Abenteuern.</p>
