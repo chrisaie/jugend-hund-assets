@@ -109,13 +109,31 @@
         font-size: 13px;
       }
     }
+    .image-wrapper {
+      position: relative;
+    }
+
+    .price-tag {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background-color: rgba(46, 134, 222, 0.85);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
 
 <div class="slider-container">
   <div class="card">
-    <img src="bett_m.jpg" alt="Bettmüpferli" />
+    <div class="image-wrapper">
+      <img src="bett_m.jpg" alt="Bettmüpferli" />
+      <div class="price-tag">CHF 40.-</div>
+    </div>
     <div class="card-content">
       <h3>Bettmüpferli</h3>
       <p>Ein süsser Tagesabschluss für kleine Abenteurer.</p>
@@ -124,7 +142,10 @@
   </div>
 
   <div class="card">
-    <img src="dessert.jpg" alt="Benny Znüni" />
+    <div class="image-wrapper">
+      <img src="dessert.jpg" alt="Benny Znüni" />
+      <div class="price-tag">CHF 70.-</div>
+    </div>
     <div class="card-content">
       <h3>Bennys Spezial-Znüni</h3>
       <p>Liebevoll belegte Pausenstärkung für unser Leiterteam.</p>
@@ -133,7 +154,10 @@
   </div>
 
   <div class="card">
-    <img src="glace.jpg" alt="Glace für alle" />
+    <div class="image-wrapper">
+      <img src="glace.jpg" alt="Glace für alle" />
+      <div class="price-tag">CHF 80.-</div>
+    </div>
     <div class="card-content">
       <h3>Eine Runde Glaces</h3>
       <p>Ein Glace für jedes Kind und jeden Hund. Sommerfeeling pur!</p>
@@ -142,7 +166,10 @@
   </div>
 
   <div class="card">
-    <img src="backpack.jpg" alt="Wander-Surprise" />
+    <div class="image-wrapper">
+      <img src="backpack.jpg" alt="Wander-Surprise" />
+      <div class="price-tag">CHF 100.-</div>
+    </div>
     <div class="card-content">
       <h3>Surprise im Rucksack</h3>
       <p>Magische Momente mitten im Berg – einfach so.</p>
@@ -151,7 +178,10 @@
   </div>
 
   <div class="card">
-    <img src="firstaid.jpg" alt="1. Hilfe Update" />
+    <div class="image-wrapper">
+      <img src="firstaid.jpg" alt="1. Hilfe Update" />
+      <div class="price-tag">CHF 150.-</div>
+    </div>
     <div class="card-content">
       <h3>1. Hilfe Koffer</h3>
       <p>Für alles von kleinen Kratzern bis zu echten Abenteuern.</p>
