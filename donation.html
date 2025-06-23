@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -109,6 +109,7 @@
         font-size: 13px;
       }
     }
+
     .image-wrapper {
       position: relative;
     }
@@ -124,6 +125,96 @@
       font-weight: bold;
       font-size: 14px;
     }
+
+    dialog {
+      position: relative;
+      border: none;
+      border-radius: 12px;
+      padding: 24px 20px;
+      max-width: 420px;
+      width: 90%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    dialog::backdrop {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      border: none;
+      background: transparent;
+      font-size: 20px;
+      cursor: pointer;
+      color: #666;
+      padding: 4px;
+      transition: color 0.2s ease;
+    }
+
+    .close-button:hover {
+      color: #2e86de;
+    }
+
+    .md-field {
+      position: relative;
+      margin: 16px 0;
+    }
+
+    .md-field input {
+      width: 70%;
+      padding: 12px;
+      border: 1px solid #aaa;
+      border-radius: 6px;
+      outline: none;
+      font-size: 16px;
+      background: transparent;
+    }
+
+    .md-field input:focus {
+      border-color: #2e86de;
+    }
+
+    .md-field label {
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      color: #888;
+      font-size: 14px;
+      background: white;
+      padding: 0 4px;
+      transition: all 0.2s ease;
+      pointer-events: none;
+    }
+
+    .md-field input:focus + label,
+    .md-field input:not(:placeholder-shown):valid + label {
+      top: -8px;
+      left: 8px;
+      font-size: 12px;
+      color: #2e86de;
+    }
+
+    dialog button {
+      background-color: #2e86de;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    dialog button:hover:not(.close-button) {
+      background-color: #1e6fd1;
+    }
+
+    #qrResult img {
+      max-width: 200px;
+      margin-top: 15px;
+    }
   </style>
 </head>
 <body>
@@ -137,19 +228,20 @@
     <div class="card-content">
       <h3>Bettmüpferli</h3>
       <p>Ein süsser Tagesabschluss für kleine Abenteurer.</p>
-      <button>Jetzt unterstützen</button>
+      <button onclick="openDonation('Bettmüpferli', 40)">Jetzt unterstützen</button>
     </div>
   </div>
 
+  <!-- Ersetzte Benny-Karte -->
   <div class="card">
     <div class="image-wrapper">
-      <img src="dessert.jpg" alt="Benny Znüni" />
-      <div class="price-tag">CHF 70.-</div>
+      <img src="dessert.jpg" alt="Wunschbetrag" />
+      <div class="price-tag">frei</div>
     </div>
     <div class="card-content">
-      <h3>Bennys Spezial-Znüni</h3>
-      <p>Liebevoll belegte Pausenstärkung für unser Leiterteam.</p>
-      <button>Jetzt unterstützen</button>
+      <h3>Individuelle Unterstützung</h3>
+      <p>Wähle selbst den Betrag und was du unterstützen willst.</p>
+      <button onclick="openDonation('', '')">Jetzt unterstützen</button>
     </div>
   </div>
 
@@ -161,7 +253,7 @@
     <div class="card-content">
       <h3>Eine Runde Glaces</h3>
       <p>Ein Glace für jedes Kind und jeden Hund. Sommerfeeling pur!</p>
-      <button>Jetzt unterstützen</button>
+      <button onclick="openDonation('Glaces', 80)">Jetzt unterstützen</button>
     </div>
   </div>
 
@@ -173,7 +265,7 @@
     <div class="card-content">
       <h3>Surprise im Rucksack</h3>
       <p>Magische Momente mitten im Berg – einfach so.</p>
-      <button>Jetzt unterstützen</button>
+      <button onclick="openDonation('Wander-Surprise', 100)">Jetzt unterstützen</button>
     </div>
   </div>
 
@@ -185,10 +277,120 @@
     <div class="card-content">
       <h3>1. Hilfe Koffer</h3>
       <p>Für alles von kleinen Kratzern bis zu echten Abenteuern.</p>
-      <button>Jetzt unterstützen</button>
+      <button onclick="openDonation('1. Hilfe Koffer', 150)">Jetzt unterstützen</button>
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<dialog id="qrModal">
+  <button class="close-button" onclick="document.getElementById('qrModal').close()">✖</button>
+  <h2 style="margin-bottom: 1rem;">Spende unterstützen</h2>
+  <form method="dialog" id="donationForm" onsubmit="event.preventDefault();">
+    <div class="md-field">
+      <input id="betrag" type="number" min="1" required placeholder=" " />
+      <label for="betrag">Betrag (CHF)</label>
+    </div>
+    <div class="md-field">
+      <input id="vermerk" type="text" required placeholder=" " />
+      <label for="vermerk">Zweck</label>
+    </div>
+    <div class="md-field">
+      <input id="name" type="text" required placeholder=" " />
+      <label for="name">Name</label>
+    </div>
+    <div class="md-field">
+      <input id="street" type="text" required placeholder=" " />
+      <label for="street">Strasse</label>
+    </div>
+    <div class="md-field">
+      <input id="postalCode" type="text" required placeholder=" " />
+      <label for="postalCode">PLZ</label>
+    </div>
+    <div class="md-field">
+      <input id="town" type="text" required placeholder=" " />
+      <label for="town">Ort</label>
+    </div>
+
+    <div style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px;">
+      <button type="button" onclick="fetchQr()">🔍 QR-Code anzeigen</button>
+      <button type="button" onclick="fetchPdf()">📄 PDF herunterladen</button>
+    </div>
+  </form>
+  <div id="qrResult" style="text-align: center; margin-top: 16px;"></div>
+</dialog>
+
+<script>
+  function openDonation(description, presetAmount) {
+    document.getElementById("qrResult").innerHTML = "";
+    document.getElementById("betrag").value = presetAmount || "";
+    document.getElementById("vermerk").value = description || "";
+    document.getElementById("qrModal").showModal();
+  }
+
+  function buildInvoiceRequest() {
+    const amount = parseFloat(document.getElementById("betrag").value);
+    const name = document.getElementById("name").value;
+    const street = document.getElementById("street").value;
+    const postalCode = document.getElementById("postalCode").value;
+    const town = document.getElementById("town").value;
+
+    if (!amount || amount <= 0 || !name || !street || !postalCode || !town) {
+      alert("Bitte fülle alle Felder korrekt aus.");
+      return null;
+    }
+
+    return { name, street, postalCode, town, amount };
+  }
+
+  async function fetchQr() {
+    const payload = buildInvoiceRequest();
+    if (!payload) return;
+
+    try {
+      const response = await fetch("http://localhost:8080/invoice/png", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) throw new Error("QR-Code konnte nicht generiert werden.");
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      document.getElementById("qrResult").innerHTML = `<img src="${url}" alt="QR-Code" />`;
+
+    } catch (err) {
+      alert(err.message);
+    }
+  }
+
+  async function fetchPdf() {
+    const payload = buildInvoiceRequest();
+    if (!payload) return;
+
+    try {
+      const response = await fetch("http://localhost:8080/invoice/pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) throw new Error("PDF konnte nicht generiert werden.");
+
+      const blob = await response.blob(); // ⬅️ get raw PDF bytes
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "qr-rechnung.pdf";
+      link.click();
+    } catch (err) {
+      alert(err.message);
+    }
+  }
+</script>
+
 
 </body>
 </html>
