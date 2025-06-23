@@ -311,6 +311,10 @@
       <input id="town" type="text" required placeholder=" " />
       <label for="town">Ort</label>
     </div>
+    <div class="md-field">
+      <input id="message" type="text" required placeholder=" " />
+      <label for="message">Mitteilung</label>
+    </div>
 
     <div style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px;">
       <button type="button" onclick="fetchQr()">🔍 QR-Code anzeigen</button>
@@ -321,10 +325,11 @@
 </dialog>
 
 <script>
-  function openDonation(description, presetAmount) {
+  function openDonation(description, presetAmount, message) {
     document.getElementById("qrResult").innerHTML = "";
     document.getElementById("betrag").value = presetAmount || "";
     document.getElementById("vermerk").value = description || "";
+    document.getElementById("message").value = description || "";
     document.getElementById("qrModal").showModal();
   }
 
@@ -334,13 +339,15 @@
     const street = document.getElementById("street").value;
     const postalCode = document.getElementById("postalCode").value;
     const town = document.getElementById("town").value;
+    const message = document.getElementById("message").value;
+
 
     if (!amount || amount <= 0 || !name || !street || !postalCode || !town) {
       alert("Bitte fülle alle Felder korrekt aus.");
       return null;
     }
 
-    return { name, street, postalCode, town, amount };
+    return { name, street, postalCode, town, amount, message };
   }
 
   async function fetchQr() {
@@ -348,7 +355,7 @@
     if (!payload) return;
 
     try {
-      const response = await fetch("http://localhost:8080/invoice/png", {
+      const response = await fetch("https://coral-app-2ybos.ondigitalocean.app/invoice/png", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -370,7 +377,7 @@
     if (!payload) return;
 
     try {
-      const response = await fetch("http://localhost:8080/invoice/pdf", {
+      const response = await fetch("https://coral-app-2ybos.ondigitalocean.app/invoice/pdf", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
